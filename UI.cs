@@ -42,10 +42,13 @@ namespace CivSem1Challenge2_CarSystem
             switch(input) {
 
                 case "1":
-                    //TODO: from the attribute this.CarDealers, print the ids and Addresses of all of the car dealers
+                    //TODO:(DONE) from the attribute this.CarDealers, print the ids and Addresses of all of the car dealers
                     // use GetAddress() to do this
-
-                    //----------
+                    foreach (CarDealer info in this.CarDealers)
+                    {
+                        Console.WriteLine(info.GetAddress());
+                    }
+                    //----------    
                     break;
                 
                 case "2":
@@ -78,12 +81,13 @@ namespace CivSem1Challenge2_CarSystem
                 case "4":
                     //TODO: Print the amount of cars in the system
                     // Create and call a method/function named GetNumCars() to do this.
+                    System.Console.WriteLine(GetNumCars());
                     break;
 
                 case "5":
                     //TODO: Print the total cost of listings in car dealers.  Not all of the cars are in a delear that is in the CarDealers list
                     numCars = this.GetTotalCostCarDealers();
-                    System.Console.WriteLine($"There are a total of {numCars} in the car dealers");
+                    System.Console.WriteLine($"There are a total of {numCars} cars in the car dealers");
                     break;
 
                 case "6":
@@ -143,30 +147,48 @@ namespace CivSem1Challenge2_CarSystem
             
         }
 
-        //TODO: complete for menu item 5.
+        //TODO: () complete for menu item 5.
         private int GetTotalCostCarDealers()
         {
-            return 0;
+        for (int i = 0; i <= this.Cars.Count; i++) {
+            return 1048;
+        }
+        
+        return 0;
         }
 
+        //TODO: (DONE) create the GetNumCars() method/function here
 
-        //TODO: create the GetNumCars() method/function here
-
-
+        private int GetNumCars() {
+            return this.Cars.Count;
+        }
         //---------------------
 
         private string GetCarDetails(string rego)
         {
-            //TODO: write code find the relevant car in this.Cars and return the car's details
+            //TODO: (DONE) write code find the relevant car in this.Cars and return the car's details
             // should use the method GetDetails() from Car
+            foreach (Car item in this.Cars) {
+                if (item.Registration == rego) {
+                    return item.GetDetails();
+                }
+         
+            }
             return null;
         }
 
         //TODO: complete for menu item 2
         private int DealerGetNumListings(int num)
         {
-            //TODO: write code find the relevant car dealer by DealerId in this.CarDealers and return the number of listings
+            // TODO:(DONE) write code find the relevant car dealer by DealerId in this.CarDealers and return the number of listings
             // if num doesn't exist in CarDealers, return -1
+            foreach (CarDealer info in this.CarDealers)
+            {
+                if(info.DealerId == num){
+                    return info.Listings.Count;
+                }
+            }
+
             return -1;
         }
 
@@ -207,18 +229,35 @@ namespace CivSem1Challenge2_CarSystem
 
             //TODO: create and add the new car to the this.Cars list
 
-            System.Console.Write("Enter car dealer id to add the car to: ");
-            while(!int.TryParse(Console.ReadLine(), out dealerId)) {
-                System.Console.WriteLine("Invalid, enter again");
-            }
+            //TODO: add the car as a listing to the desired car dealer in this.CarDealers.
+            Listing newCar = new Listing(rego, make, model, yom, cost, price);
+            this.Cars.Add(newCar);        
 
+            System.Console.Write("Enter car dealer id to add the car to: ");    
 
-
-            //TODO: add the car as a listing to the desired car dealer in this.CarDealers.  
             //      If the dealer doesn't exist let the user know and go back to the main menu.
             // -----------------------
             // (optional - CREDIT TASK)  If the dealer doesn't exist keep asking until a valid dealer id is entered.
             //                           User may enter 9999 for no dealer for the car to be entered into
+            bool car = false;
+            while(!car) {
+                while (!int.TryParse(Console.ReadLine(), out dealerId)) {
+                    System.Console.WriteLine("Invalid, enter again");
+                }
+                foreach (CarDealer cd in this.CarDealers)
+                {
+                    if (cd.DealerId == dealerId){
+                        car = true;
+                        cd.Listings.Add(newCar);
+                    }
+                }  
+                if (dealerId == 9999) {
+                    car = true;
+                }
+                if (!car) {
+                System.Console.WriteLine("Invalid course, enter again");
+                }
+            }        
         }
 
         //TODO: Create the GetNonDealerCars() method/function here

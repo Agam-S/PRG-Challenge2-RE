@@ -1,0 +1,7 @@
+1. Foreach loop to get Public Getaddress values from CarDealer list.
+
+2. Foreach loop to get Public values from CarDealer and match user input to CarDealerID, then count the amount of Lsiting with 
+that input match.
+
+
+3. Fix GetDetails with this.value. Use foreach loop to find and match rego with inpit, then print that rego details by using GetDetails.
